@@ -1,0 +1,77 @@
+/* Login.css */
+
+/* Estilo general para la página */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+  }
+  
+  /* Contenedor principal que envuelve todo el login */
+  .login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh; /* Hace que ocupe toda la altura de la pantalla */
+  }
+  
+  /* Contenedor que centrará solo el formulario de login */
+  .login-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Estilo para la tarjeta de login */
+  .login-card {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  
+  /* Estilo del título */
+  .login-card h2 {
+    font-size: 22px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo del input */
+  .input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+  }
+  
+  /* Estilo del botón */
+  .login-button {
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  /* Efecto hover para el botón */
+  .login-button:hover {
+    background-color: #45a049;
+  }
+  
+  /* Estilo para el mensaje de error o bienvenida */
+  .message {
+    margin-top: 10px;
+    color: #e74c3c;
+    font-size: 16px;
+  }
+  

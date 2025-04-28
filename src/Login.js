@@ -1,21 +1,47 @@
 import React, { useState } from 'react';
-function Login() {
+import './Login.css';  // Asegúrate de que tengas el archivo CSS con los estilos
+
+function Login({ login }) {
   const [usuario, setUsuario] = useState('');
   const [mensaje, setMensaje] = useState('');
+
   const ingresar = () => {
     const rol = usuario.toLowerCase();
-    if (rol === 'admin') setMensaje('Bienvenido Administrador');
-    else if (rol === 'recepcionista') setMensaje('Bienvenido Recepcionista');
-    else if (rol === 'cliente') setMensaje('Bienvenido Cliente');
-    else setMensaje('Usuario no reconocido');
+    if (rol === 'admin') {
+      setMensaje('Bienvenido Administrador');
+      login('admin');
+    } else if (rol === 'recepcionista') {
+      setMensaje('Bienvenido Recepcionista');
+      login('recepcionista');
+    } else if (rol === 'cliente') {
+      setMensaje('Bienvenido Cliente');
+      login('cliente');
+    } else {
+      setMensaje('Usuario no reconocido');
+    }
   };
+
   return (
-    <div>
-      <h2>Login</h2>
-      <input placeholder="Usuario" value={usuario} onChange={e => setUsuario(e.target.value)} />
-      <button onClick={ingresar}>Ingresar</button>
-      <p>{mensaje}</p>
+    <div className="login-wrapper"> {/* Contenedor principal que rodea todo el formulario */}
+      <div className="login-container"> {/* Este es el contenedor del formulario de login */}
+        <div className="login-card">
+          <h2>Bienvenido a la Gestión de Reservas</h2>
+          <div className="login-form">
+            <input
+              className="input"
+              placeholder="Introduce tu rol (admin, recepcionista, cliente)"
+              value={usuario}
+              onChange={(e) => setUsuario(e.target.value)}
+            />
+            <button className="login-button" onClick={ingresar}>
+              Ingresar
+            </button>
+          </div>
+          {mensaje && <p className="message">{mensaje}</p>}
+        </div>
+      </div>
     </div>
   );
 }
+
 export default Login;
