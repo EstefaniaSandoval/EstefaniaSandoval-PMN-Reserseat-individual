@@ -1,20 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-function Reservas({ reservas, setReservas }) {
+function Reservas({ reservas, setReservas, rol }) {
   const [reservaEditada, setReservaEditada] = useState(null);
   const [fechaNueva, setFechaNueva] = useState('');
   const [horaNueva, setHoraNueva] = useState('');
 
-  // Función para eliminar reserva
-  const eliminarReserva = (id) => {
-    if (window.confirm('¿Seguro que deseas eliminar esta reserva?')) {
-      const nuevasReservas = reservas.filter(reserva => reserva.id !== id);
-      setReservas(nuevasReservas);
-    }
-  };
-
-  // Función para editar reserva
   const editarReserva = (id) => {
     const reserva = reservas.find(res => res.id === id);
     setReservaEditada(reserva);
@@ -22,13 +13,11 @@ function Reservas({ reservas, setReservas }) {
     setHoraNueva(reserva.hora);
   };
 
-  // Función para confirmar la edición de una reserva
   const confirmarEdicion = (id) => {
-    // Verificar si el nuevo horario ya está ocupado
     const horarioOcupado = reservas.some(
       (reserva) => reserva.fecha === fechaNueva && reserva.hora === horaNueva && reserva.id !== id
     );
-    
+
     if (horarioOcupado) {
       alert('Este horario ya está ocupado. Por favor, elige otro horario.');
     } else {
@@ -36,7 +25,7 @@ function Reservas({ reservas, setReservas }) {
         reserva.id === id ? { ...reserva, fecha: fechaNueva, hora: horaNueva } : reserva
       );
       setReservas(nuevasReservas);
-      setReservaEditada(null); // Cerrar el formulario de edición
+      setReservaEditada(null);
       setFechaNueva('');
       setHoraNueva('');
     }
@@ -50,20 +39,19 @@ function Reservas({ reservas, setReservas }) {
         {reservas.map((res) => (
           <li key={res.id}>
             Cliente: {res.cliente} - Fecha: {res.fecha} - Hora: {res.hora}
-            <button onClick={() => eliminarReserva(res.id)} style={{ marginLeft: '10px', color: 'red' }}>
-              Eliminar
-            </button>
-            <button
-              onClick={() => editarReserva(res.id)}
-              style={{ marginLeft: '10px', color: 'blue' }}
-            >
-              Editar
-            </button>
+            {rol === 'recepcionista' && (
+              <button
+                onClick={() => editarReserva(res.id)}
+                style={{ marginLeft: '10px', color: 'blue' }}
+              >
+                Editar
+              </button>
+            )}
           </li>
         ))}
       </ul>
 
-      {reservaEditada && (
+      {reservaEditada && rol === 'recepcionista' && (
         <div>
           <h3>Editar Reserva</h3>
           <p>

@@ -27,12 +27,17 @@ function Login({ login }) {
         <div className="login-card">
           <h2>Bienvenido a la Gestión de Reservas</h2>
           <div className="login-form">
-            <input
+            <select
               className="input"
-              placeholder="Introduce tu rol (admin, recepcionista, cliente)"
               value={usuario}
               onChange={(e) => setUsuario(e.target.value)}
-            />
+            >
+              <option value="">Selecciona tu rol</option>
+              <option value="admin">Administrador</option>
+              <option value="recepcionista">Recepcionista</option>
+              <option value="cliente">Cliente</option>
+            </select>
+
             <button className="login-button" onClick={ingresar}>
               Ingresar
             </button>

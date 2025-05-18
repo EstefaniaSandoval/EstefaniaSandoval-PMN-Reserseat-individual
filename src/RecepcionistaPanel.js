@@ -1,46 +1,73 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 function RecepcionistaPanel({ reservas, setReservas }) {
-  // Función para confirmar una reserva
   const confirmarReserva = (id) => {
-    const nuevasReservas = reservas.map((reserva) =>
-      reserva.id === id ? { ...reserva, estado: 'Confirmada' } : reserva
+    const actualizadas = reservas.map((r) =>
+      r.id === id
+        ? { ...r, estado: 'Confirmada', mensaje: 'Tu reserva ha sido confirmada por el recepcionista.' }
+        : r
     );
-    setReservas(nuevasReservas);
+    setReservas(actualizadas);
   };
 
-  // Función para cancelar una reserva
   const cancelarReserva = (id) => {
-    const nuevasReservas = reservas.map((reserva) =>
-      reserva.id === id ? { ...reserva, estado: 'Cancelada' } : reserva
+    const actualizadas = reservas.map((r) =>
+      r.id === id
+        ? { ...r, estado: 'Cancelada', mensaje: 'Tu reserva ha sido cancelada por el recepcionista.' }
+        : r
     );
-    setReservas(nuevasReservas);
+    setReservas(actualizadas);
   };
 
   return (
     <div>
-      <h2>Panel del Recepcionista: Confirmación y Gestión de Reservas</h2>
-      <ul>
-        {reservas.map((reserva) => (
-          <li key={reserva.id}>
-            Cliente: {reserva.cliente} - Fecha: {reserva.fecha} - Hora: {reserva.hora} - Estado: {reserva.estado || 'Pendiente'}
-            <button
-              onClick={() => confirmarReserva(reserva.id)}
-              style={{ marginLeft: '10px', color: 'green' }}
-              disabled={reserva.estado === 'Confirmada' || reserva.estado === 'Cancelada'}
-            >
-              Confirmar
-            </button>
-            <button
-              onClick={() => cancelarReserva(reserva.id)}
-              style={{ marginLeft: '10px', color: 'red' }}
-              disabled={reserva.estado === 'Cancelada'}
-            >
-              Cancelar
-            </button>
-          </li>
-        ))}
-      </ul>
+      <h2>Panel del Recepcionista</h2>
+      {reservas.length === 0 ? (
+        <p>No hay reservas registradas.</p>
+      ) : (
+        <ul>
+          {reservas.map((res) => (
+            <li key={res.id} style={{ marginBottom: '10px' }}>
+              <strong>{res.cliente}</strong> — {res.fecha} a las {res.hora}  
+              <br />
+              Estado: <strong>{res.estado}</strong>
+              {res.mensaje && <div><em>Mensaje: {res.mensaje}</em></div>}
+
+              <div style={{ marginTop: '5px' }}>
+                <button
+                  onClick={() => confirmarReserva(res.id)}
+                  disabled={res.estado !== 'Pendiente'}
+                  style={{
+                    marginRight: '10px',
+                    backgroundColor: res.estado !== 'Pendiente' ? '#ccc' : 'green',
+                    color: 'white',
+                    border: 'none',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    cursor: res.estado !== 'Pendiente' ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Confirmar
+                </button>
+                <button
+                  onClick={() => cancelarReserva(res.id)}
+                  disabled={res.estado === 'Cancelada'}
+                  style={{
+                    backgroundColor: res.estado === 'Cancelada' ? '#ccc' : 'red',
+                    color: 'white',
+                    border: 'none',
+                    padding: '5px 10px',
+                    borderRadius: '5px',
+                    cursor: res.estado === 'Cancelada' ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Cancelar
+                </button>
+              </div>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
